@@ -8,20 +8,34 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
+@RequestMapping("/employee")
 public class EmployeeController {
 
     @Autowired
     EmployeeService employeeService;
 
-    @PostMapping("/employee")
+    @PostMapping
     public ResponseEntity<EmployeeModel> registerEmployee(@RequestBody @Valid EmployeeDto employeeDto){
         var employeeModel = new EmployeeModel();
         BeanUtils.copyProperties(employeeDto, employeeModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(employeeService.save(employeeModel));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<EmployeeModel>> getAllEmployees(){
+        return ResponseEntity.status(HttpStatus.FOUND).body(employeeService.findAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getOneEmployee(@PathVariable(value = "id") UUID id){
+        Optional<EmployeeModel> infoEmployee = employeeService.findById(id);
+        return ResponseEntity.status(HttpStatus.FOUND).body(infoEmployee);
     }
 }
