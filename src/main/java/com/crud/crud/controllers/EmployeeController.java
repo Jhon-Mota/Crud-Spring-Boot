@@ -6,6 +6,7 @@ import com.crud.crud.services.EmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,4 +39,24 @@ public class EmployeeController {
         Optional<EmployeeModel> infoEmployee = employeeService.findById(id);
         return ResponseEntity.status(HttpStatus.FOUND).body(infoEmployee);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<EmployeeModel> updateEmployee(@PathVariable(value = "id")UUID id,
+                                                        @RequestBody @Valid EmployeeDto employeeDto){
+
+        Optional<EmployeeModel> infoEmployeeOptional = employeeService.findById(id);
+        var infoEmployee = infoEmployeeOptional.get();
+        BeanUtils.copyProperties(employeeDto, infoEmployee);
+        return ResponseEntity.status(HttpStatus.OK).body(employeeService.save(infoEmployee));
+
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteEmployee(@PathVariable(value = "id") UUID id){
+
+        Optional<EmployeeModel> infoEmployeeOptional = employeeService.findById(id);
+        employeeService.delete(infoEmployeeOptional.get());
+        return ResponseEntity.status(HttpStatus.OK).body("Employee deleted.");
+    }
+
 }
