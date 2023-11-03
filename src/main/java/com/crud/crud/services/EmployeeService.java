@@ -4,8 +4,9 @@ import com.crud.crud.models.EmployeeModel;
 import com.crud.crud.repositories.EmployeeRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Service;
+
+
 
 
 import java.util.List;
@@ -35,6 +36,21 @@ public class EmployeeService {
     }
 
     public void delete(EmployeeModel employeeModel) {
+
         employeeRepository.delete(employeeModel);
     }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

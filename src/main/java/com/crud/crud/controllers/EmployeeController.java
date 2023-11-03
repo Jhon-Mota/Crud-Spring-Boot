@@ -23,9 +23,11 @@ public class EmployeeController {
     EmployeeService employeeService;
 
     @PostMapping
-    public ResponseEntity<EmployeeModel> registerEmployee(@RequestBody @Valid EmployeeDto employeeDto){
+    public ResponseEntity<EmployeeModel> registerEmployee(@RequestBody @Valid EmployeeDto employeeDto, String cpf){
         var employeeModel = new EmployeeModel();
+
         BeanUtils.copyProperties(employeeDto, employeeModel);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(employeeService.save(employeeModel));
     }
 
@@ -36,7 +38,13 @@ public class EmployeeController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getOneEmployee(@PathVariable(value = "id") UUID id){
+
         Optional<EmployeeModel> infoEmployee = employeeService.findById(id);
+
+        if(!infoEmployee.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Employee not found.");
+        }
+
         return ResponseEntity.status(HttpStatus.FOUND).body(infoEmployee);
     }
 

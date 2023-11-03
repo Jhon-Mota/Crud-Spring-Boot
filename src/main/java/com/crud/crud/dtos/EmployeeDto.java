@@ -12,6 +12,9 @@ import java.sql.Date;
 
 
 public record EmployeeDto(
+
+        @NotNull @JsonFormat(pattern = "dd/MM/yyyy") Date admissionDate,
+
         @NotBlank @Size(max = 100) String name,
 
         @NotBlank String email,

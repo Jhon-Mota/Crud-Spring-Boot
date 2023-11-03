@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.validator.constraints.Length;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -20,7 +18,8 @@ public class EmployeeModel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @CreationTimestamp
+    @Column(nullable = false, length = 11)
+    @NotNull
     @JsonFormat(pattern = "dd/MM/yyyy")
     private Date admissionDate;
 
