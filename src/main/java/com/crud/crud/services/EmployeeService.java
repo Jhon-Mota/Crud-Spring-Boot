@@ -40,6 +40,14 @@ public class EmployeeService {
         employeeRepository.delete(employeeModel);
     }
 
+    public boolean existsByCpf(String cpf){
+        return employeeRepository.existsByCpf(cpf);
+    }
+
+    public boolean existsByRg(String rg){
+        return employeeRepository.existsByCpf(rg);
+    }
+
 }
 
 

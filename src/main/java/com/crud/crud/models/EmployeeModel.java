@@ -74,4 +74,9 @@ public class EmployeeModel {
     @Column(nullable = false)
     private boolean armyDocument;
 
+
+    // Getter para verificar se o funcionário já está registrado.
+    public String getCpf() {
+        return cpf;
+    }
 }

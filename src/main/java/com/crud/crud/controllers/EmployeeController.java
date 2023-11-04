@@ -23,7 +23,16 @@ public class EmployeeController {
     EmployeeService employeeService;
 
     @PostMapping
-    public ResponseEntity<EmployeeModel> registerEmployee(@RequestBody @Valid EmployeeDto employeeDto, String cpf){
+    public ResponseEntity<Object> registerEmployee(@RequestBody @Valid EmployeeDto employeeDto, String cpf){
+
+        if (employeeService.existsByCpf(employeeDto.getCpf())){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Employee already registered");
+        }
+
+        if (employeeService.existsByRg(employeeDto.getRg())){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Employee already registered");
+        }
+
         var employeeModel = new EmployeeModel();
 
         BeanUtils.copyProperties(employeeDto, employeeModel);
