@@ -23,7 +23,7 @@ public class EmployeeController {
     EmployeeService employeeService;
 
     @PostMapping
-    public ResponseEntity<Object> registerEmployee(@RequestBody @Valid EmployeeDto employeeDto, String cpf){
+    public ResponseEntity<Object> registerEmployee(@RequestBody @Valid EmployeeDto employeeDto){
 
         if (employeeService.existsByCpf(employeeDto.getCpf())){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Employee already registered");

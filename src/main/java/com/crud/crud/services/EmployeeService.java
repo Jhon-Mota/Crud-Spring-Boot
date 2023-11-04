@@ -45,7 +45,7 @@ public class EmployeeService {
     }
 
     public boolean existsByRg(String rg){
-        return employeeRepository.existsByCpf(rg);
+        return employeeRepository.existsByRg(rg);
     }
 
 }
